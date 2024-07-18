@@ -137,8 +137,9 @@
     async function extractTextFromAudio(downloadURL) {
       // Example function to extract text from audio using some API endpoint
       // You would replace this with your actual extraction logic
-      const response = await fetch('/extract-audio-text?filePath=' + encodeURIComponent(downloadURL), {
-        method: 'GET',
+      const response = await fetch('/extract-audio-text?filePath=', { // + encodeURIComponent(downloadURL)
+        method: 'POST',
+        body: JSON.stringify({ filePath: encodeURIComponent(downloadURL) })
       });
 
       const extractedText = await response.text();
