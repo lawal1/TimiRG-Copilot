@@ -56,7 +56,6 @@ async function audioDownloader (url){
 }
 
 app.post("/extract-audio-text", async (req, res) => {
-  // let filePath = req.query.filePath;
   const {filePath} = req.body
   if (!filePath) {
     return res.status(400).send("File path is missing!");
