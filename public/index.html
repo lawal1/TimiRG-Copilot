@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimiRG-Copilot App</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <!-- Include the Firebase SDK for Storage -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <!-- Include the Firebase SDK for Storage -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
+      authDomain: "timirg-copilot.firebaseapp.com",
+      projectId: "timirg-copilot",
+      storageBucket: "timirg-copilot.appspot.com",
+      messagingSenderId: "491904583147",
+      appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
+      measurementId: "G-GNZKB9SKDE"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    window.storage = storage; // Make storage accessible globally
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-5">Gemini App</h1>
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Record Your Voice</h5>
+        <button id="recordBtn" class="btn btn-primary">Start Recording</button>
+        <button id="stopBtn" class="btn btn-danger" disabled>Stop Recording</button>
+        <button id="uploadBtn" class="btn btn-success" disabled>Upload Recording</button>
+        <div class="mt-3">
+          <audio id="audioPlayback" controls></audio>
+          <p id="recordingTime">Recording Time: 0s</p>
+        </div>
+      </div>
+    </div>
+    <div id="result" class="mt-5"></div>
+  </div>
+
+  <script>
+    let mediaRecorder;
+    let audioChunks = [];
+    let startTime;
+    let timerInterval;
+
+    const recordBtn = document.getElementById('recordBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const audioPlayback = document.getElementById('audioPlayback');
+    const recordingTime = document.getElementById('recordingTime');
+    const resultDiv = document.getElementById('result');
+
+    function updateRecordingTime() {
+      const elapsedTime = Math.round((Date.now() - startTime) / 1000);
+      recordingTime.textContent = `Recording Time: ${elapsedTime}s`;
+    }
+
+    recordBtn.addEventListener('click', async () => {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.start();
+
+      startTime = Date.now();
+      timerInterval = setInterval(updateRecordingTime, 1000);
+
+      mediaRecorder.ondataavailable = event => {
+        audioChunks.push(event.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        clearInterval(timerInterval);
+        updateRecordingTime();
+        
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        audioPlayback.src = audioUrl;
+
+        uploadBtn.disabled = false;
+      };
+
+      recordBtn.disabled = true;
+      stopBtn.disabled = false;
+    });
+
+    stopBtn.addEventListener('click', () => {
+      mediaRecorder.stop();
+      stopBtn.disabled = true;
+      recordBtn.disabled = false;
+    });
+    
+    uploadBtn.addEventListener('click', async () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      audioChunks = [];
+
+      const storageRef = storage.ref('audio/' + Date.now() + '.wav');
+      const uploadTask = storageRef.put(audioBlob);
+
+      uploadTask.then(async snapshot => {
+        console.log('File uploaded successfully:', snapshot);
+
+        // Get the download URL
+        const downloadURL = await snapshot.ref.getDownloadURL();
+
+        // Log the download URL to the console
+        console.log('Download URL:', downloadURL);
+
+        // Use the download URL in the GET API and display the result
+        const result = await extractTextFromAudio(downloadURL);
+        displayResult(result);
+      }).catch(error => {
+        console.error('Error uploading file:', error);
+      });
+
+      uploadBtn.disabled = true;
+    });
+
+    async function extractTextFromAudio(downloadURL) {
+      // Example function to extract text from audio using some API endpoint
+      // You would replace this with your actual extraction logic
+      const response = await fetch('/extract-audio-text?filePath=' + encodeURIComponent(downloadURL), {
+        method: 'GET',
+      });
+
+      const extractedText = await response.text();
+      return extractedText;
+    }
+
+    function displayResult(result) {
+      resultDiv.innerHTML = `
+        <h3>Extracted Text</h3>
+        <p>${result}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
