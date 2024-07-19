@@ -67,7 +67,28 @@ app.post("/extract-audio-text", async (req, res) => {
 
     console.log(extractedText);
     // Generate content using your model
-    const prompt = "Help me return only number of boys in this statement without any additional text: " + extractedText;
+    const prompt = `help return the following information from the text below in the order listed if any is not found list the parameter but make the space empty
+                    1. Gestational age
+                    2. Fetal size
+                      - Crown-rump length (CRL)
+                      - Biparietal diameter (BPD)
+                      - Head circumference (HC)
+                      - Abdominal circumference (AC)
+                      - Femur length (FL)
+                    3. Fetal position
+                    4. Number of fetuses
+                    5. Placenta
+                      - Location
+                      - Grade
+                    6. Amniotic fluid
+                      - Volume
+                      - Index
+                    7. Fetal movement
+                    8. Fetal heart rate
+                    9. Umbilical cord
+                      - Number of vessels
+                      - Insertion
+                     10. Any abnormalities :` + extractedText;
     const content = [{ text: prompt }]; // Wrap the prompt in an object with a "text" property
     const result = await model.generateContent(content);
     
