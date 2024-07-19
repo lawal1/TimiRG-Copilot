@@ -67,7 +67,7 @@ app.post("/extract-audio-text", async (req, res) => {
 
     console.log(extractedText);
     // Generate content using your model
-    const prompt = `help return the following information from the text below in the order listed if any is not found list the parameter but make the space empty
+    const prompt = `help return the following information from the text below in the order listed if any is not found the text list the parameter as zero
                     1. Gestational age
                     2. Fetal size
                       - Crown-rump length (CRL)
