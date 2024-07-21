@@ -97,6 +97,7 @@ app.post("/extract-audio-text", async (req, res) => {
 
     // Send the extracted text back in the response
     res.status(200).send(response);
+    fs.unlinkSync(path)
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while processing the file."+error);
