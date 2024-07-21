@@ -111,7 +111,7 @@ app.post("/generate-gemini-report", async (req, res) => {
   }
 
   try {
-      const prompt = `help return report based on this data with add addition info and add this pls Note addition edit is required by  medical professional  : ${response}`;
+      const prompt = `help return report based on this data and add this to the end only remove this if you are a licenced and authorised medical professional  : ${response}`;
       const content = [{ text: prompt }]; // Wrap the prompt in an object with a "text" property
       const result = await model.generateContent(content);
 
