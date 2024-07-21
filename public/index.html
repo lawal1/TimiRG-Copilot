@@ -151,12 +151,46 @@
     }
 
     function displayResult(result) {
-      resultDiv.innerHTML = `
-        <h3>Extracted Text</h3>
-        <textarea style="width:60%; height: 100px; margin-left: 20%">${result}</textarea>
-        <button class="btn btn-primary">Submit Result</button>
-      `;
-    }
+            resultDiv.innerHTML = `
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3>Extracted Text</h3>
+                        <textarea id="resultM" style="width:80%; height: 150px; margin-left: 10%">${result}</textarea>
+                        <button id="GenerateReport" class="btn btn-primary">Generate Report</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3>Generated Report</h3>
+                        <textarea id="report" style="width:80%; height: 150px; margin-left: 10%"></textarea>
+                        <button class="btn btn-primary">Submit Result</button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('GenerateReport').addEventListener('click', async () => {
+                const responseText = document.getElementById('resultM').value;
+
+                try {
+                    const response = await fetch('/generate-gemini-report', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ response: responseText })
+                    });
+
+                    if (response.ok) {
+                        const report = await response.text();
+                        document.getElementById('report').value = report;
+                    } else {
+                        console.error('Failed to generate report');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+  
+  
   </script>
 </body>
 </html>

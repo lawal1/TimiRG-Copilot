@@ -104,6 +104,25 @@ app.post("/extract-audio-text", async (req, res) => {
   }
 });
 
+app.post("/generate-gemini-report", async (req, res) => {
+  const { response } = req.body;
+  if (!response) {
+      return res.status(400).send("Response data is missing!");
+  }
+
+  try {
+      const prompt = `help return report based on this data: ${response}`;
+      const content = [{ text: prompt }]; // Wrap the prompt in an object with a "text" property
+      const result = await model.generateContent(content);
+
+      const report = result.response.candidates[0].content.parts[0].text.trim(); // Extract the text from the model response
+      res.status(200).send(report);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("An error occurred while generating the report: " + error.message);
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
