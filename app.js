@@ -113,7 +113,7 @@ app.post("/generate-gemini-report", async (req, res) => {
   try {
       const prompt = `help return report based on this data  : ${response}`;
       const content = [{ text: prompt }]; // Wrap the prompt in an object with a "text" property
-      const result = await model.generateContent(content);
+      var result = await model.generateContent(content);
 
       var report = result.response.candidates[0].content.parts[0].text.trim(); // Extract the text from the model response
       result = result+"\n\n remove this if you are a licenced and authorised medical professional "
