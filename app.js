@@ -116,7 +116,7 @@ app.post("/generate-gemini-report", async (req, res) => {
       const result = await model.generateContent(content);
 
       var report = result.response.candidates[0].content.parts[0].text.trim(); // Extract the text from the model response
-      report = report+"\n\n remove this if you are a licenced and authorised medical professional "
+      report = report+"\n\n Remove the aboveif you are a licenced and authorised medical professional "
       res.status(200).send(report);
   } catch (error) {
       console.error(error);
