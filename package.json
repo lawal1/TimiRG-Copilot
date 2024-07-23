@@ -6,6 +6,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
-    "mime-types": "^2.1.35"
+    "mime-types": "^2.1.35",
+    "pdfkit": "^0.15.0"
   }
 }

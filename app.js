@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 const APIKey = "AIzaSyCT0MXrGRyFXKHQbq0GrSA1fLYbnSNMzJ8";
 const genAI = new GoogleGenerativeAI(APIKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
-
+const PdfDoc = require("pdfkit")
 app.use(express.static('public'));
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -32,6 +32,20 @@ const main = async (filePath) => {
   const result = await model.generateContent([audio, prompt]);
   return result.response.text();
 };
+
+function generatePdf(report, options = { name: `${(new Date()).toDateString()}.pdf` } ){
+
+  const doc = new PdfDoc();
+  doc.pipe(fs.createWriteStream(options.name));
+
+  doc.text('', 100, 50).underline(0, 50, 10000, 27, { color: 'gray' })
+
+  doc.fontSize(11).text(report.replace(/##|\*\*/g, ""), 100, 100);
+
+  doc.end()
+
+}
+
 
 async function audioDownloader (url){
   const filePath = `${Date.now()}-audio.wav`
@@ -124,6 +138,16 @@ app.post("/generate-gemini-report", async (req, res) => {
   }
 });
 
+app.post("/submit", async (req, res) => {
+  const { report } = req.body;
+  try {
+    generatePdf(report)
+    res.status(200).send("Report generated");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while submitting the report: " + error.message);
+  }
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
