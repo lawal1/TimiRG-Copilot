@@ -161,7 +161,7 @@
                     <div class="col-lg-6">
                         <h3>Generated Report</h3>
                         <textarea id="report" style="width:90%; height: 150px; margin-left: 5%"></textarea>
-                        <button class="btn btn-primary">Submit Result</button>
+                        <button id="submitReport" class="btn btn-primary">Submit Result</button>
                     </div>
                 </div>
             `;
@@ -181,6 +181,27 @@
                     if (response.ok) {
                         const report = await response.text();
                         document.getElementById('report').value = report;
+                    } else {
+                        console.error('Failed to generate report');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+            document.getElementById('submitReport').addEventListener('click', async () => {
+                const report = document.getElementById('report').value;
+
+                try {
+                    const response = await fetch('/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ report })
+                    });
+
+                    if (response.ok) {
+                        alert("report successfully generated!")
                     } else {
                         console.error('Failed to generate report');
                     }
