@@ -145,7 +145,7 @@ app.post("/generate-gemini-report", async (req, res) => {
 });
 
 app.get("/submit", async (req, res) => {
-  const { report } = req.query || req.body;
+  const { report } = req.body;
   try {
     const dir = await generatePdf(report)
     res.download(`${dir}`, function (e){
