@@ -11,7 +11,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <!-- Include the Firebase SDK for Storage -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
   <script>
@@ -29,22 +28,30 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    // Login function
-    function login() {
+    // Signup function
+    function signup() {
       const email = document.getElementById('emailInput').value;
       const password = document.getElementById('passwordInput').value;
+      const title = document.getElementById('titleInput').value;
 
-      firebase.auth().signInWithEmailAndPassword(email, password)
+      firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
+
+          // Save additional user info in the database
+          firebase.database().ref('users/' + user.uid).set({
+            email: email,
+            title: title
+          });
+
           Swal.fire({
             icon: 'success',
-            title: 'Login successful',
-            text: 'Welcome back!',
+            title: 'Signup successful',
+            text: 'Your account has been created!',
           }).then(() => {
-            // Redirect to dashboard or another page
-            window.location.href = 'dashboard.html';
+            // Redirect to login page or another page
+            window.location.href = 'login.html';
           });
         })
         .catch((error) => {
@@ -52,7 +59,7 @@
           const errorMessage = error.message;
           Swal.fire({
             icon: 'error',
-            title: 'Login failed',
+            title: 'Signup failed',
             text: errorMessage,
           });
         });
@@ -69,7 +76,7 @@
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <br><br><br><br>
-            <h3 style="text-align: center;">Login to Dashboard</h3>
+            <h3 style="text-align: center;">Create An Account</h3>
             <br>
             <div class="form-group">
               <label for="emailInput">Enter Email</label>
@@ -81,11 +88,16 @@
               <input type="password" class="form-control" id="passwordInput" placeholder="Enter Password">
             </div>
             <br>
-            <button onclick="login()" style="background-color: #081e3d;width: 100%; border-radius: 10px; color: white;">
-              <p style="padding-top: 7px;">Login</p>
+            <div class="form-group">
+              <label for="titleInput">Professional Title</label>
+              <input type="text" class="form-control" id="titleInput" placeholder="E.g Dr/Radiologist/Gynecologist">
+            </div>
+             <br>
+            <button onclick="signup()" style="background-color: #081e3d;width: 100%; border-radius: 10px; color: white;">
+              <p style="padding-top: 7px;">Create Your Account</p>
             </button>
             <br><br>
-            <p style="text-align: center;">I already have an account <a style="color: #081e3d ; font-weight: 700;" href="sign.html">Create Your Account</a></p>
+            <p style="text-align: center;">I already have an account <a style="color: #081e3d ; font-weight: 700;" href="login.html">Login</a></p>
             <br><br>
           </div>
         </div>
