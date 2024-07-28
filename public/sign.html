@@ -16,17 +16,28 @@
   <script>
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
-      authDomain: "timirg-copilot.firebaseapp.com",
-      projectId: "timirg-copilot",
-      storageBucket: "timirg-copilot.appspot.com",
-      messagingSenderId: "491904583147",
-      appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
-      measurementId: "G-GNZKB9SKDE"
-    };
+  apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
+  authDomain: "timirg-copilot.firebaseapp.com",
+  databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
+  projectId: "timirg-copilot",
+  storageBucket: "timirg-copilot.appspot.com",
+  messagingSenderId: "491904583147",
+  appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
+  measurementId: "G-GNZKB9SKDE"
+};
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    try {
+      firebase.initializeApp(firebaseConfig);
+      console.log("Firebase initialized successfully");
+    } catch (error) {
+      console.error("Firebase initialization error", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Initialization failed',
+        text: 'Check the console for more details',
+      });
+    }
 
     // Signup function
     function signup() {
@@ -89,8 +100,8 @@
             </div>
             <br>
             <div class="form-group">
-              <label for="titleInput">Professional Title</label>
-              <input type="text" class="form-control" id="titleInput" placeholder="E.g Dr/Radiologist/Gynecologist">
+              <label for="titleInput">Professional Title And Name</label>
+              <input type="text" class="form-control" id="titleInput" placeholder="E.g Dr Tolu">
             </div>
              <br>
             <button onclick="signup()" style="background-color: #081e3d;width: 100%; border-radius: 10px; color: white;">
