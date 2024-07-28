@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimiRG-Copilot App</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <!-- Include the Firebase SDK for Storage -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <!-- Include the Firebase SDK for Storage -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
+      authDomain: "timirg-copilot.firebaseapp.com",
+      projectId: "timirg-copilot",
+      storageBucket: "timirg-copilot.appspot.com",
+      messagingSenderId: "491904583147",
+      appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
+      measurementId: "G-GNZKB9SKDE"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    window.storage = storage; // Make storage accessible globally
+  </script>
+</head>
+<body>
+  <div  class="row">
+    <div style="background-color: #081e3d;" class="col-lg-6">
+
+    </div> 
+    <div class="col-lg-6">
+      <div class="row">
+          <div class="col-lg-2">
+
+        
+          </div>
+          <div class="col-lg-8">
+            <div class="form-group">
+                <label for="exampleInputText">Text Input</label>
+                <input type="text" class="form-control" id="exampleInputText" placeholder="Enter text">
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="exampleInputText">Text Input</label>
+                <input type="text" class="form-control" id="exampleInputText" placeholder="Enter text">
+            </div>
+            <br><br>
+
+          </div>
+          <div class="col-lg-2">
+
+          </div>
+      </div>
+    </div> 
+     
+  </div>
+
+
+</body>
+</html>
