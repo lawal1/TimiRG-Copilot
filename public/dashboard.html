@@ -65,7 +65,7 @@
       appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
       measurementId: "G-GNZKB9SKDE"
     };
-
+  
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
@@ -124,15 +124,15 @@
              <p style="color: #081e3d; margin-top: 15px; margin-left: 10px;">Welcome ,<span id="name"></span></p>
              <br>
 
-            <div id="stageone" >
+            <div id="stageone"  >
                 <button id="recordBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Start Session</button>
             
             </div>
             
-            <div id="stagetwo">
+            <div id="stagetwo" style="display: none;">
                 <div class="mt-3">
                     <audio id="audioPlayback" controls></audio>
-                    <p id="recordingTime">Recording Time: 0s</p>
+                    <p style="color: red;" id="recordingTime">Recording Time: 0s</p>
                   </div>
                   <br>
                 <button id="stopBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Stop Session</button>
@@ -141,7 +141,7 @@
             </div>
 
 
-            <div id="stagethree" class="row ">
+            <div id="stagethree" style="display: none;" class="row ">
                 <div class="col-lg-1">
                     
                 </div>
@@ -192,6 +192,12 @@
     const audioPlayback = document.getElementById('audioPlayback');
     const recordingTime = document.getElementById('recordingTime');
     const resultDiv = document.getElementById('result');
+    const stagethree = document.getElementById('stagethree');
+    const stagetwo= document.getElementById('stagetwo');
+    const stageone = document.getElementById('stageone');
+  
+
+
 
     function updateRecordingTime() {
       const elapsedTime = Math.round((Date.now() - startTime) / 1000);
@@ -199,6 +205,11 @@
     }
 
     recordBtn.addEventListener('click', async () => {
+      document.getElementById("stageone").style.display = "none";
+
+
+      document.getElementById("stagetwo").style.display = "block";
+
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.start();
@@ -226,14 +237,22 @@
     });
 
     stopBtn.addEventListener('click', () => {
+      document.getElementById("stagetwo").style.display = "none";
+      document.getElementById("stagethree").style.display = "block";
       mediaRecorder.stop();
       stopBtn.disabled = true;
       recordBtn.disabled = false;
     });
     
     uploadBtn.addEventListener('click', async () => {
+      document.getElementById("stagethree").style.display = "none";
+      
+    
       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
       audioChunks = [];
+      const storage = firebase.storage();
+
+    window.storage = storage;
 
       const storageRef = storage.ref('audio/' + Date.now() + '.wav');
       const uploadTask = storageRef.put(audioBlob);
