@@ -32,18 +32,24 @@ const main = async (filePath) => {
   const result = await model.generateContent([audio, prompt]);
   return result.response.text();
 };
+async function delay(min=1){
+  return new Promise((resolve, reject) => {
+      setTimeout(()=> resolve(true), min * 1000 * 60)
+  })
+}
 
-function generatePdf(report, options = { name: `${(new Date()).toDateString()}.pdf` } ){
-
+async function generatePdf(report, options = { name: `${(new Date()).toDateString().replace(/\s/g, "-")}.pdf` } ){
   const doc = new PdfDoc();
-  doc.pipe(fs.createWriteStream(options.name));
-
-  doc.text('', 100, 50).underline(0, 50, 10000, 27, { color: 'gray' })
-
-  doc.fontSize(11).text(report.replace(/##|\*\*/g, ""), 100, 100);
-
-  doc.end()
-
+ 
+    const x = fs.createWriteStream(options.name)
+    doc.pipe(x);
+  
+    doc.text('', 100, 50).underline(0, 50, 10000, 27, { color: 'gray' })
+  
+    doc.fontSize(11).text(report.replace(/##|\*\*/g, ""), 100, 100);
+    doc.end()
+    // await delay(0.08)
+    return options.name 
 }
 
 
@@ -138,11 +144,13 @@ app.post("/generate-gemini-report", async (req, res) => {
   }
 });
 
-app.post("/submit", async (req, res) => {
+app.get("/submit", async (req, res) => {
   const { report } = req.body;
   try {
-    generatePdf(report)
-    res.status(200).send("Report generated");
+    const dir = await generatePdf(report)
+    res.download(`${dir}`, function (e){
+      fs.unlinkSync(dir)
+    })
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while submitting the report: " + error.message);
