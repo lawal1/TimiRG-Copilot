@@ -1,171 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapha AI - AI-Powered Maternal Care</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimiRG-Copilot App</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
+  authDomain: "timirg-copilot.firebaseapp.com",
+  databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
+  projectId: "timirg-copilot",
+  storageBucket: "timirg-copilot.appspot.com",
+  messagingSenderId: "491904583147",
+  appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
+  measurementId: "G-GNZKB9SKDE"
+};
 
-        .hero-section {
-            background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
+    // Initialize Firebase
+    try {
+      firebase.initializeApp(firebaseConfig);
+      console.log("Firebase initialized successfully");
+    } catch (error) {
+      console.error("Firebase initialization error", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Initialization failed',
+        text: 'Check the console for more details',
+      });
+    }
 
-        .card {
-            margin-bottom: 20px;
-        }
+    // Signup function
+    function signup() {
+      const email = document.getElementById('emailInput').value;
+      const password = document.getElementById('passwordInput').value;
+      const title = document.getElementById('titleInput').value;
 
-        .card-body {
-            padding: 30px;
-        }
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
 
-        footer {
-            background: #f8f9fa;
-        }
+          // Save additional user info in the database
+          firebase.database().ref('users/' + user.uid).set({
+            email: email,
+            title: title
+          });
 
-        .btn-custom {
-            background-color: #081e3d;
-            color: white;
-        }
-
-        .btn-custom:hover {
-            background-color: #06203a;
-        }
-
-        .navbar-nav .nav-link {
-            color: #081e3d;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #06203a;
-        }
-    </style>
+          Swal.fire({
+            icon: 'success',
+            title: 'Signup successful',
+            text: 'Your account has been created!',
+          }).then(() => {
+            // Redirect to login page or another page
+            window.location.href = 'login.html';
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          Swal.fire({
+            icon: 'error',
+            title: 'Signup failed',
+            text: errorMessage,
+          });
+        });
+    }
+  </script>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Rapha AI</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#features">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="hero-section text-center">
-        <div class="container">
-            <h1 class="display-4">Accelerate Maternal Care with AI</h1>
-            <p class="lead">Streamline obstetric ultrasounds 7x faster, generating comprehensive reports for immediate action</p>
-            <a href="#features" class="btn btn-custom btn-lg">Learn More</a>
-        </div>
-    </header>
-
-    <!-- Features Section -->
-    <section id="features" class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Fast Performance</h5>
-                            <p class="card-text">Empower radiologists to perform, analyze, and document scans 7 times faster.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Comprehensive Reports</h5>
-                            <p class="card-text">Generate comprehensive reports for immediate action with instant editable and print options.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">AI-Powered</h5>
-                            <p class="card-text">Utilize cutting-edge AI to enhance the accuracy and efficiency of maternal care.</p>
-                        </div>
-                    </div>
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6" style="background-color: #081e3d;height: 1000px;">
+        <!-- Left side content if any -->
+      </div>
+      <div class="col-lg-6">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <br><br><br><br>
+            <h3 style="text-align: center;">Create An Account</h3>
+            <br>
+            <div class="form-group">
+              <label for="emailInput">Enter Email</label>
+              <input type="email" class="form-control" id="emailInput" placeholder="Enter your Email">
             </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>About Us</h2>
-                    <p>We are dedicated to revolutionizing maternal care through AI technology. Our platform helps radiologists perform and document ultrasounds efficiently, ensuring better outcomes for mothers and babies.</p>
-                </div>
-                <div class="col-md-6">
-                    <img src="https://via.placeholder.com/500" class="img-fluid" alt="About Image">
-                </div>
+            <br>
+            <div class="form-group">
+              <label for="passwordInput">Enter Password</label>
+              <input type="password" class="form-control" id="passwordInput" placeholder="Enter Password">
             </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <h2>Contact Us</h2>
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea class="form-control" id="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-custom btn-block">Submit</button>
-                    </form>
-                </div>
+            <br>
+            <div class="form-group">
+              <label for="titleInput">Professional Title And Name</label>
+              <input type="text" class="form-control" id="titleInput" placeholder="E.g Dr Tolu">
             </div>
+             <br>
+            <button onclick="signup()" style="background-color: #081e3d;width: 100%; border-radius: 10px; color: white;">
+              <p style="padding-top: 7px;">Create Your Account</p>
+            </button>
+            <br><br>
+            <p style="text-align: center;">I already have an account <a style="color: #081e3d ; font-weight: 700;" href="login.html">Login</a></p>
+            <br><br>
+          </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center py-4">
-        <div class="container">
-            <p>&copy; 2024 Rapha AI. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        // Custom JavaScript can go here
-    </script>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
