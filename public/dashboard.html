@@ -142,6 +142,13 @@
                 <img style="margin-top: 10px; margin-left: 20px;" width="100px" src="we.gif">
               </p>
             </div>
+            <div style="display: none;" id="stagefive">
+              <p style="margin-left: 30px;">
+
+                <span style="font-size: 20px; color: #3894eb; font-weight:600 ;">Generating Report</span><br>
+                <img style="margin-top: 10px; margin-left: 20px;" width="100px" src="we.gif">
+              </p>
+            </div>
             
             <div id="stagetwo" style="display: none;">
                 <div class="mt-3">
@@ -345,20 +352,21 @@
 
     function displayResult(result) {
           document.getElementById("stagefour").style.display = "none";
+          
             resultDiv.innerHTML = `
                 <div class="row">
                     <div id="GenerateReportx" class="col-lg-6">
-                        <h3>Extracted Text</h3>
+                        <h3 style="margin-left:20px;">Extracted Text</h3>
                           <textarea id="resultM" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"> ${result}</textarea>
                            <br> <div class="text-center">
-                              <button id="GenerateReport" class="btn btn-primary">Generate Report</button>
+                              <button id="GenerateReport" style="background-color: #081e3d!important;"  class="btn btn-primary">Generate Report</button>
                             </div>
                 </div>
                 <div style="display: none;" id="submitReport" class="col-lg-6">
-                   <h3>Generated Report</h3>
-                    <textarea id="report" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"></textarea>
+                   <h3 style="margin-left:20px;">Generated Report</h3>
+                    <textarea id="report" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px">Hold for a second report coming in...</textarea>
                    <b><div class="text-center">
-                   <button id="submitReport" class="btn btn-primary">Create PDF</button>
+                   <button id="submitReport" style="background-color: #081e3d!important;" class="btn btn-primary">Create PDF</button>
                 </div>
     </div>
 </div>
@@ -366,6 +374,7 @@
             `;
 
             document.getElementById('GenerateReport').addEventListener('click', async () => {
+             
               document.getElementById("GenerateReportx").style.display = "none";
               document.getElementById("submitReport").style.display = "block";
                 const responseText = document.getElementById('resultM').value;
