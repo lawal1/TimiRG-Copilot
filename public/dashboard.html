@@ -15,7 +15,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
   <style>
     .shadow-inward {
-        box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+        box-shadow: inset 0 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
         .button-container {
             display: flex;
@@ -115,6 +115,8 @@
           <div class="col-lg-7">
             <p style="color: rgba(128, 128, 128, 0.815); padding-left: 5px; padding-top: 12px; margin: 0;" id="title"></p>
             <p style="color: black; padding-left: 5px; padding-top: 0; margin: 0;" id="email"></p>
+            <a href="#" style="font-size: 12px; color: red;padding-left: 5px;" id="logout-link">Log Out</a>
+         
           </div>
         </div>
       </div>
@@ -124,10 +126,10 @@
   <div class="container-fluid">
     <div class="row">
          
-         <div  class="col-lg-9 shadow-inward">
+         <div style="padding-left: 50px;"  class="col-lg-8 shadow-inward">
             <!-- Content here -->
-             <p style="color: #081e3d; margin-top: 15px; margin-left: 10px;">Welcome ,<span id="name"></span></p>
-             <br>
+             <p style="color: #081e3d; margin-top: 15px; margin-left: 10px; font-weight: 600; font-size: 30px;">Welcome ,<span id="name"></span></p>
+            
 
             <div id="stageone"  >
                 <button id="recordBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Start Session</button>
@@ -179,8 +181,47 @@
             </div>
             <div id="result" class="mt-5"></div>
         </div>
-        <div style="height: 1500px;" class="col-lg-3">
-
+        <div style="height: 1500px;" class="col-lg-4">
+          <div class="container mt-5">
+            <h2 class="mb-4">Previous Session</h2>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>S/N</th>
+                  <th>Patients Name</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>John Doe</td>
+                  <td>2024-08-01</td>
+                  <td>
+                    <button class="btn btn-primary" style="background-color: #081e3d !important;border: #081e3d;" >Download PDF</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>John Doe</td>
+                  <td>2024-08-01</td>
+                  <td>
+                    <button class="btn btn-primary" style="background-color: #081e3d !important; border: #081e3d;" >Download PDF</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>John Doe</td>
+                  <td>2024-08-01</td>
+                  <td>
+                    <button class="btn btn-primary" style="background-color: #081e3d !important;border: #081e3d;" >Download PDF</button>
+                  </td>
+                </tr>
+                <!-- Add more rows as needed -->
+              </tbody>
+            </table>
+          </div>
         </div>
     </div>
   </div>
@@ -368,6 +409,20 @@
                 }
             });
         }
+        const logoutLink = document.getElementById('logout-link');
+
+// Add event listener to the logout link
+logoutLink.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent the default link behavior
+    auth.signOut().then(() => {
+        console.log('User logged out successfully');
+        // Redirect to login page or show a message
+        window.location.href = 'index.html'; // Change this to your login page
+    }).catch((error) => {
+        console.error('Error logging out:', error);
+    });
+});
+       
   
   
   </script>
