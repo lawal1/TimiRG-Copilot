@@ -347,18 +347,18 @@
           document.getElementById("stagefour").style.display = "none";
             resultDiv.innerHTML = `
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div id="GenerateReportx" class="col-lg-6">
                         <h3>Extracted Text</h3>
                           <textarea id="resultM" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"> ${result}</textarea>
                            <br> <div class="text-center">
                               <button id="GenerateReport" class="btn btn-primary">Generate Report</button>
                             </div>
                 </div>
-                <div class="col-lg-6">
+                <div style="display: none;" id="submitReport" class="col-lg-6">
                    <h3>Generated Report</h3>
                     <textarea id="report" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"></textarea>
                    <b><div class="text-center">
-                   <button id="submitReport" class="btn btn-primary">Submit Result</button>
+                   <button id="submitReport" class="btn btn-primary">Create PDF</button>
                 </div>
     </div>
 </div>
@@ -366,6 +366,8 @@
             `;
 
             document.getElementById('GenerateReport').addEventListener('click', async () => {
+              document.getElementById("GenerateReportx").style.display = "none";
+              document.getElementById("submitReport").style.display = "block";
                 const responseText = document.getElementById('resultM').value;
 
                 try {
