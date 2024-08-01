@@ -126,7 +126,14 @@
 
             <div id="stageone"  >
                 <button id="recordBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Start Session</button>
-            
+             
+            </div>
+            <div style="display: none;" id="stagefour">
+              <p style="margin-left: 30px;">
+
+                <span style="font-size: 20px; color: #3894eb; font-weight:600 ;">Generating Result</span><br>
+                <img style="margin-top: 10px; margin-left: 20px;" width="100px" src="we.gif">
+              </p>
             </div>
             
             <div id="stagetwo" style="display: none;">
@@ -245,7 +252,10 @@
     });
     
     uploadBtn.addEventListener('click', async () => {
+     
       document.getElementById("stagethree").style.display = "none";
+      
+      document.getElementById("stagefour").style.display = "block";
       
     
       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
@@ -268,6 +278,7 @@
 
         // Use the download URL in the GET API and display the result
         const result = await extractTextFromAudio(downloadURL);
+       
         displayResult(result);
       }).catch(error => {
         console.error('Error uploading file:', error);
@@ -293,6 +304,7 @@
     }
 
     function displayResult(result) {
+          document.getElementById("stagefour").style.display = "none";
             resultDiv.innerHTML = `
                 <div class="row">
                     <div class="col-lg-6">
