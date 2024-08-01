@@ -56,6 +56,9 @@
     display: inline-block;
     margin: 10px;
 }
+.button-container {
+    text-align: center;
+}
   </style>
   <script>
     // Your web app's Firebase configuration
@@ -165,20 +168,11 @@
               <label for="emailInput">Full Name:</label>
               <input type="text" class="form-control" id="nameInput" placeholder="Enter Full Name">
             </div>
-            <br>
-            <div class="form-group">
-                <label for="emailInput">Age:</label>
-                <input type="number" class="form-control" id="ageInput" placeholder="Enter Age">
-              </div>
-              <br>
-              <div class="form-group">
-                <label for="emailInput">Gender:</label>
-                <input type="text" class="form-control" id="genderInput" placeholder="Enter Gender">
-              </div>
+           
               <br>
               <div class="form-group">
                 <label for="emailInput">Hospital number:</label>
-                <input type="text" class="form-control" id="emailInput" placeholder="Enter Hospital number">
+                <input type="text" class="form-control" id="Hospitalnumber" placeholder="Enter Hospital number">
               </div>
               <br>
                     <button id="uploadBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Submit Analysis</button>
@@ -313,15 +307,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <h3>Extracted Text</h3>
-                        <textarea id="resultM" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px">${result}</textarea>
-                        <button id="GenerateReport" class="btn btn-primary center-button"><p style="text-align:center">Generate Report</p></button>
-                    </div>
-                    <div class="col-lg-6">
-                        <h3>Generated Report</h3>
-                        <textarea id="report" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"></textarea>
-                        <button id="submitReport" class="btn btn-primary center-button">Submit Result</button>
-                    </div>
+                          <textarea id="resultM" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px">${result}</textarea>
+                           <br> <div class="text-center">
+                              <button id="GenerateReport" class="btn btn-primary">Generate Report</button>
+                            </div>
                 </div>
+                <div class="col-lg-6">
+                   <h3>Generated Report</h3>
+                    <textarea id="report" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"></textarea>
+                   <b><div class="text-center">
+                   <button id="submitReport" class="btn btn-primary">Submit Result</button>
+                </div>
+    </div>
+</div>
+
             `;
 
             document.getElementById('GenerateReport').addEventListener('click', async () => {
