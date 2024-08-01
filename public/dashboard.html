@@ -52,6 +52,10 @@
             font-size: 16px;
             line-height: 1;
         }
+        .center-button {
+    display: inline-block;
+    margin: 10px;
+}
   </style>
   <script>
     // Your web app's Firebase configuration
@@ -254,7 +258,7 @@
     uploadBtn.addEventListener('click', async () => {
      
       document.getElementById("stagethree").style.display = "none";
-      
+
       document.getElementById("stagefour").style.display = "block";
       
     
@@ -309,13 +313,13 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <h3>Extracted Text</h3>
-                        <textarea id="resultM" style="width:90%; height: 150px; margin-left: 5%">${result}</textarea>
-                        <button id="GenerateReport" class="btn btn-primary">Generate Report</button>
+                        <textarea id="resultM" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px">${result}</textarea>
+                        <button id="GenerateReport" class="btn btn-primary center-button"><p style="text-align:center">Generate Report</p></button>
                     </div>
                     <div class="col-lg-6">
                         <h3>Generated Report</h3>
-                        <textarea id="report" style="width:90%; height: 150px; margin-left: 5%"></textarea>
-                        <button id="submitReport" class="btn btn-primary">Submit Result</button>
+                        <textarea id="report" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"></textarea>
+                        <button id="submitReport" class="btn btn-primary center-button">Submit Result</button>
                     </div>
                 </div>
             `;
