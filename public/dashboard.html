@@ -304,7 +304,13 @@
     });
     
     uploadBtn.addEventListener('click', async () => {
-     
+
+      const name = document.getElementById('nameInput').value;
+
+      const Hospitalnumber = document.getElementById('Hospitalnumber').value;
+
+
+       
       document.getElementById("stagethree").style.display = "none";
 
       document.getElementById("stagefour").style.display = "block";
@@ -382,7 +388,10 @@
              
               document.getElementById("GenerateReportx").style.display = "none";
               document.getElementById("submitReportx").style.display = "block";
+
                 const responseText = document.getElementById('resultM').value;
+                   
+                responseText = "Patient Name :" + name + "Hospital number :" + Hospitalnumber + " " +    responseText;
 
                 try {
                     const response = await fetch('/generate-gemini-report', {
