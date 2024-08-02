@@ -161,6 +161,11 @@
             <br>
             </div>
 
+            <div id="stagesix"  >
+             <p> Here is the PDF of the report create: <button id="recordBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;">Download Report</button>
+             </p>
+          </div>
+
 
             <div id="stagethree" style="display: none;" class="row ">
                 <div class="col-lg-1">
@@ -359,14 +364,14 @@
                         <h3 style="margin-left:30px;">Extracted Text</h3>
                           <textarea id="resultM" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px"> ${result}</textarea>
                            <br> <div class="text-center">
-                              <button id="GenerateReport" style="background-color: #081e3d!important;"  class="btn btn-primary">Generate Report</button>
+                              <button id="GenerateReport" style="border: #081e3d; background-color: #081e3d!important;"  class="btn btn-primary">Generate Report</button>
                             </div>
                 </div>
-                <div style="display: none;" id="submitReport" class="col-lg-6">
+                <div style="display: none;" id="submitReportx" class="col-lg-6">
                    <h3 style="margin-left:30px;">Generated Report</h3>
                     <textarea id="report" style="width:90%; height: 250px; margin-left: 5%; border-radius:10px">Hold for a second report coming in...</textarea>
                    <b><div class="text-center">
-                   <button id="submitReport" style="background-color: #081e3d!important;" class="btn btn-primary">Create PDF</button>
+                   <button id="submitReport" style="border: #081e3d;background-color: #081e3d!important;" class="btn btn-primary">Create PDF</button>
                 </div>
     </div>
 </div>
@@ -399,7 +404,12 @@
                 }
             });
             document.getElementById('submitReport').addEventListener('click', async () => {
-                const report = document.getElementById('report').value;
+              
+              document.getElementById("submitReportx").style.display = "none";
+
+              document.getElementById("submitReportx").style.display = "none";
+
+              const report = document.getElementById('report').value;
 
                 try {
                     const response = await fetch('/submit', {
