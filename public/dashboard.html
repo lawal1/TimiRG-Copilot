@@ -162,7 +162,7 @@
             </div>
 
             <div style="display: none;" id="stagesix"  >
-             <p> Here is the PDF of the report create: <button id="recordBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;">Download Report</button>
+             <p> Here is the PDF of the report create: <button id="recordBtn" onclick="downloadRecentReport()" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;">Download Report</button>
              </p>
           </div>
 
@@ -205,31 +205,8 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>John Doe</td>
-                  <td>2024-08-01</td>
-                  <td>
-                    <button class="btn btn-primary" style="background-color: #081e3d !important;border: #081e3d;" >Download PDF</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>John Doe</td>
-                  <td>2024-08-01</td>
-                  <td>
-                    <button class="btn btn-primary" style="background-color: #081e3d !important; border: #081e3d;" >Download PDF</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>John Doe</td>
-                  <td>2024-08-01</td>
-                  <td>
-                    <button class="btn btn-primary" style="background-color: #081e3d !important;border: #081e3d;" >Download PDF</button>
-                  </td>
-                </tr>
+              <tbody id="reportsTable">
+
                 <!-- Add more rows as needed -->
               </tbody>
             </table>
@@ -392,7 +369,8 @@
 
                 let responseText = document.getElementById('resultM').value;
                    
-                responseText = "Patient Name :" + name + "Hospital number :" + Hospitalnumber + " " +    responseText;
+                responseText = "Date :" + (new Date()).toUTCString() + "Patient Name :" + name + "Hospital number :" + Hospitalnumber + " " +    responseText;
+
                 console.log(responseText)
                 try {
                     const response = await fetch('/generate-gemini-report', {
@@ -420,18 +398,18 @@
               document.getElementById("stagesix").style.display = "block";
 
               const report = document.getElementById('report').value;
-
+              const drEmail = window.localStorage.getItem('drEmail');
                 try {
-                    const response = await fetch('/submit', {
+                    const response = await fetch('/store-report', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ report })
+                        body: JSON.stringify({ report, drEmail, name })
                     });
 
                     if (response.ok) {
-                        alert("report successfully generated!")
+                        alert("pdf successfully generated.")
                     } else {
                         console.error('Failed to generate report');
                     }
@@ -454,6 +432,73 @@ logoutLink.addEventListener('click', (e) => {
     });
 });
        
-  
-  
+async function getRawReports (){
+  try {
+    const drEmail = window.localStorage.getItem('drEmail');
+      console.log(drEmail)
+      const res = await fetch(`/get-reports?drEmail=${drEmail}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const {data} = await res.json()
+      console.log(data)
+      return data
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+async function getReports (){
+    try {
+      const drEmail = window.localStorage.getItem('drEmail')
+      console.log(drEmail)
+      const res = await fetch(`/get-reports?drEmail=${drEmail}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const {data} = await res.json()
+      let html =''
+      console.log(data)
+      data.forEach((element, i) => {
+        html +=
+          `      <tr>
+                  <td>${i+1}</td>
+                  <td>${element.name || ""}</td>
+                  <td>${((new Date(element.timestamp)).toUTCString()).replace("GMT", "")}</td>
+                  <td>
+                    <button class="btn btn-primary" id=${element.id} onclick="downloadReports(this.id)" style="background-color: #081e3d !important;border: #081e3d;" >Download PDF</button>
+                  </td>
+                </tr>
+          `
+      });
+
+      document.getElementById('reportsTable').innerHTML = html
+    } catch (error) {
+      console.log(error)
+      return []
+    }
+}
+getReports()
+
+function downloadReports(id){
+  window.open(`/get-report?id=${id}`, '_blank');
+}
+
+async function downloadRecentReport(){
+  try {
+    const d = await getRawReports()
+    if(d.length > 0){
+      const report = d[0]
+      window.open(`/get-report?id=${report.id}`, '_blank');
+    }
+    return
+
+  } catch (error) {
+    alert('error occured')
+  }
+}
   </script>

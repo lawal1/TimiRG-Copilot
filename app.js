@@ -11,10 +11,32 @@ const APIKey = "AIzaSyCT0MXrGRyFXKHQbq0GrSA1fLYbnSNMzJ8";
 const genAI = new GoogleGenerativeAI(APIKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 const PdfDoc = require("pdfkit")
+const {addNew, find} = require("./fireManager")
 app.use(express.static('public'));
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+async function storeReport (report, details){
+  try {
+      const r =  report.replace(/##|\*\*/g, "")
+      const data = {...details, reportDetails: r}
+      const addNewReport = await addNew("generateReport", data)
+      console.log(addNewReport)
+      return addNewReport
+  } catch (error) {
+    throw error
+  }
+}
+
+async function getReport (filter, field){
+  try {
+      const report = await find("generateReport", filter, field)
+      return report
+  } catch (error) {
+    throw error
+  }
+}
 
 const main = async (filePath) => {
   if (!filePath || !fs.existsSync(filePath)) {
@@ -38,7 +60,7 @@ async function delay(min=1){
   })
 }
 
-async function generatePdf(report, options = { name: `${(new Date()).toDateString().replace(/\s/g, "-")}.pdf` } ){
+function generatePdf(report, options = { name: `${(new Date()).toDateString().replace(/\s/g, "-")}.pdf` } ){
   const doc = new PdfDoc();
  
     const x = fs.createWriteStream(options.name)
@@ -144,13 +166,60 @@ app.post("/generate-gemini-report", async (req, res) => {
   }
 });
 
-app.get("/submit", async (req, res) => {
+app.post("/submit", async (req, res) => {
   const { report } = req.body;
+  console.log(report)
   try {
     const dir = await generatePdf(report)
-    res.download(`${dir}`, function (e){
-      fs.unlinkSync(dir)
+    console.log(dir)
+    res.download(`${dir}`, function (e, d){
+      if(e){
+        console.log('Error downloading the file:', e);
+      } else {
+        console.log(d)
+      }
     })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while submitting the report: " + error.message);
+  }
+})
+
+app.post("/store-report", async (req, res) => {
+  const { report, drEmail,name='' } = req.body;
+  try {
+    await storeReport(report, {drEmail, timestamp: Date.now(), name})
+    res.send({success: true, message:"report successfully stored"})
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while submitting the report: " + error.message);
+  }
+})
+
+app.get("/get-reports", async (req, res) => {
+  const { drEmail } = req.query;
+  try {
+    const data = await getReport([drEmail], "drEmail")
+    res.send({success: true, message:"report successfully retrieved", data})
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while submitting the report: " + error.message);
+  }
+})
+
+app.get("/get-report", async (req, res) => {
+  const { id } = req.query;
+  try {
+    const data = await getReport([id], "id")
+    const {reportDetails} = data[0]
+    const n = generatePdf(reportDetails)
+
+    const stream = fs.createReadStream(n);
+    stream.pipe(res).once("close", function () {
+        stream.destroy(); 
+        fs.unlinkSync(n);
+    });
+
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while submitting the report: " + error.message);

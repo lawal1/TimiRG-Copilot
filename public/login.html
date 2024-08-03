@@ -33,7 +33,7 @@
     function login() {
       const email = document.getElementById('emailInput').value;
       const password = document.getElementById('passwordInput').value;
-
+      window.localStorage.setItem('drEmail', email);
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
           // Signed in 
