@@ -116,7 +116,7 @@
             <p style="color: rgba(128, 128, 128, 0.815); padding-left: 5px; padding-top: 12px; margin: 0;" id="title"></p>
             <p style="color: black; padding-left: 5px; padding-top: 0; margin: 0;" id="email"></p>
             <a href="#" style="font-size: 12px; color: red;padding-left: 5px;" id="logout-link">Log Out</a>
-         
+            <img id="dr-details" style="margin-top: 10px; margin-left: 20px;" width="80px" src="we.gif">
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@
          
          <div style="padding-left: 50px;"  class="col-lg-8 shadow-inward">
             <!-- Content here -->
-             <p style="color: #081e3d; margin-top: 15px; margin-left: 10px; font-weight: 600; font-size: 30px;">Welcome ,<span id="name"></span></p>
+             <p style="color: #081e3d; margin-top: 15px; margin-left: 10px; font-weight: 600; font-size: 30px;">Welcome ,<span id="name"><img id="dr-details" style="margin-top: 10px; margin-left: 20px;" width="60px" src="we.gif"></span></p>
             
 
             <div id="stageone"  >
@@ -196,6 +196,7 @@
         <div style="height: 1500px;" class="col-lg-4">
           <div class="container mt-5">
             <h2 class="mb-4">Previous Session</h2>
+            <img id="old-sessions" style="margin-top: 10px; margin-left: 20px;" width="100px" src="we.gif">
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -206,8 +207,7 @@
                 </tr>
               </thead>
               <tbody id="reportsTable">
-
-                <!-- Add more rows as needed -->
+               
               </tbody>
             </table>
           </div>
@@ -423,7 +423,7 @@
 // Add event listener to the logout link
 logoutLink.addEventListener('click', (e) => {
     e.preventDefault(); // Prevent the default link behavior
-    auth.signOut().then(() => {
+    firebase.auth().signOut().then(() => {
         console.log('User logged out successfully');
         // Redirect to login page or show a message
         window.location.href = 'index.html'; // Change this to your login page
@@ -475,7 +475,8 @@ async function getReports (){
                 </tr>
           `
       });
-
+      document.getElementById('old-sessions').style.display = 'none';
+      document.getElementById('dr-details').style.display = 'none';
       document.getElementById('reportsTable').innerHTML = html
     } catch (error) {
       console.log(error)
