@@ -217,8 +217,10 @@ app.get("/get-report", async (req, res) => {
     const stream = fs.createReadStream(n);
     stream.pipe(res).once("close", function () {
         stream.destroy(); 
-        fs.unlinkSync(n);
     });
+    stream.on("end", function(){
+      fs.unlinkSync(n);
+    })
 
   } catch (error) {
     console.error(error);
