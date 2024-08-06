@@ -130,7 +130,8 @@ app.post("/extract-audio-text", async (req, res) => {
                     9. Umbilical cord
                       - Number of vessels
                       - Insertion
-                     10. Any abnormalities :` + extractedText;
+                     10. Any abnormalities 
+                     11. Cervical os:` + extractedText;
     const content = [{ text: prompt }]; // Wrap the prompt in an object with a "text" property
     const result = await model.generateContent(content);
     
