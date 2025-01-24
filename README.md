@@ -4,7 +4,7 @@ Here's the updated README for Rapha AI with the GitHub link included:
 
 # Rapha AI
 
-**Developers**:Sanusi Jubril, Lawal Oluwatimileyin, Orewole Rahman, Engr Ibrahim  
+**Developers**:Sanusi Jubril, Lawal Oluwatimileyin, Orewole Rahman, Engr Ibrahim, Duyilemi Daniel
 **Product Flow**: Mrs. Lawal  
 **Design**: Ayobami  
 **Medical Consultants**: Dr. Godson, Dr. Asika, Dr. Laolu, Dr. Tunji  
