@@ -9,7 +9,7 @@ Here's the updated README for Rapha AI with the GitHub link included:
 **Design**: Ayobami  
 **Medical Consultants**: Dr. Godson, Dr. Asika, Dr. Laolu, Dr. Tunji  
 
-Rapha AI is an advanced medical application designed to enhance the efficiency and accuracy of obstetric ultrasound scans, particularly in developing regions where medical resources can be limited. Using Gemini AI, Rapha AI significantly accelerates the process of analyzing ultrasound data, allowing radiologists to document and interpret scan sessions up to 5 times faster. By automatically extracting essential data and creating structured medical reports, Rapha AI empowers healthcare providers to focus on patient care, reducing the time spent on manual documentation.
+Rapha AI is an advanced open-source medical application designed to enhance the efficiency and accuracy of obstetric ultrasound scans, particularly in developing regions where medical resources can be limited. Using Gemini AI, Rapha AI significantly accelerates the process of analyzing ultrasound data, allowing radiologists to document and interpret scan sessions up to 5 times faster. By automatically extracting essential data and creating structured medical reports, Rapha AI empowers healthcare providers to focus on patient care, reducing the time spent on manual documentation.
 
 ## Features
 
