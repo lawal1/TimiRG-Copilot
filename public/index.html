@@ -1,290 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rapha AI - AI-Powered Maternal Care</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <style>
-        li{
-            margin-right: 10px;
-            font-weight: 600;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.2px;
-        }
+      li {
+        margin-right: 10px;
+        font-weight: 600;
+      }
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.2px;
+      }
 
-        .hero-section {
-            background: url('landing.jpg') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
+      .hero-section {
+        background: url("landing.jpg") no-repeat center center/cover;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
 
-        .card {
-            margin-bottom: 20px;
-        }
+      .card {
+        margin-bottom: 20px;
+      }
 
-        .card-body {
-            padding: 30px;
-        }
+      .card-body {
+        padding: 30px;
+      }
 
-        footer {
-            background: #f8f9fa;
-        }
+      footer {
+        background: #f8f9fa;
+      }
 
-        .btn-custom {
-            background-color: #081e3d;
-            color: white;
-        }
+      .btn-custom {
+        background-color: #081e3d;
+        color: white;
+      }
 
-        .btn-custom:hover {
-            background-color: #06203a;
-        }
+      .btn-custom:hover {
+        background-color: #06203a;
+      }
 
-        .navbar-nav .nav-link {
-            color: #081e3d;
-        }
+      .navbar-nav .nav-link {
+        color: #081e3d;
+      }
 
-        .navbar-nav .nav-link:hover {
-            color: #06203a;
-        }
+      .navbar-nav .nav-link:hover {
+        color: #06203a;
+      }
     </style>
-</head>
-<body style="background-color: #e9edf1;">
+  </head>
+  <body style="background-color: #e9edf1">
     <!-- Navbar -->
-    <nav style="background-color:white !important ;" class="navbar navbar-expand-lg navbar-light bg-light">
-        <a style="color: #06203a !important; font-weight: 700; margin-left: 35px; margin-top: 12px; margin-bottom: 12px;"  class="navbar-brand" href="#">Rapha AI</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul style="margin-right: 35px; " class="navbar-nav ml-auto">
-                
-                <li class="nav-item">
-                    <a style="color: #06203a!important; "  class="nav-link" href="#about">About</a>
-                </li>
-                <li   class="nav-item">
-                    <a style="color: #06203a !important; "class="nav-link" href="#contact">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a style="color: #06203a!important; "  class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a style="
-                    background-color: #06203a!important; 
-                    color: white!important;
-                     border-radius: 10px; 
-                    padding-left: 25px;
-                    padding-right: 25px;
-
-                    "  class="nav-link" href="sign.html">Signup</a>
-                </li>
-            </ul>
-        </div>
+    <nav
+      style="background-color: white !important "
+      class="navbar navbar-expand-lg navbar-light bg-light"
+    >
+      <a
+        style="
+          color: #06203a !important;
+          font-weight: 700;
+          margin-left: 35px;
+          margin-top: 12px;
+          margin-bottom: 12px;
+        "
+        class="navbar-brand"
+        href="#"
+        >Rapha AI</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul style="margin-right: 35px" class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a style="color: #06203a !important" class="nav-link" href="#about"
+              >About</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              style="color: #06203a !important"
+              class="nav-link"
+              href="#contact"
+              >Contact</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              style="color: #06203a !important"
+              class="nav-link"
+              href="login.html"
+              >Login</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              style="
+                background-color: #06203a !important;
+                color: white !important;
+                border-radius: 10px;
+                padding-left: 25px;
+                padding-right: 25px;
+              "
+              class="nav-link"
+              href="sign.html"
+              >Sign Up</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
-
-<hr style="margin: 0px!important;">
+    <hr style="margin: 0px !important" />
     <!-- Features Section -->
-   
-    <div style="width: 100%; background-color: #e9edf1;">
-        <div style="margin: 2.3%; margin-top: 0px !important;padding: 0;">
-            <br>
-            <div class="row">
-                <div class="col-lg-6">
 
-                    <div style="width: 90%;margin-left: 5%; 
-                    background-color: white !important; 
-                    border-radius: 15px; 
-                    
-                    margin-top: 30px !important;
-                    "><br>
-                    <br>
-                     <h2 style="font-weight: 700; color: #081e3d; font-size: 52px; padding: 25px;">
-                        Accelerate Maternal <br>
-                        Care with AI
-                     </h2>
-                    
-                     <p style="font-weight: 400; color: #081e3d; padding-left: 25px; padding-right: 25px; margin-bottom: 0px;">
-                        Streamline obstetric ultrasounds 5x faster, generating comprehensive reports for immediate action
-                     </p>
-                     <br>
-                    
-                     <a href="sign.html"><button class="btn" style="background-color:#081e3d ; padding-left: 25px; padding-right: 25px; color: white;margin-left: 25px; margin-bottom: 40px;"> Start now</button>
-                     </a>
-                     <br><br>
-                    </div>
-        
-                </div>
-                <div class="col-lg-6">
-                    <div style="width: 90%;margin-left: 5%;
-                    background-color: white !important; 
-                    border-radius: 15px; 
-                    height: 100px;
-                    margin-top: 30px !important;
-                    ">
-                    <img src="baby.png" width="100%">
+    <div style="width: 100%; background-color: #e9edf1">
+      <div style="margin: 2.3%; margin-top: 0px !important; padding: 0">
+        <br />
+        <div class="row">
+          <div class="col-lg-6">
+            <div
+              style="
+                width: 90%;
+                margin-left: 5%;
+                background-color: white !important;
+                border-radius: 15px;
 
-                    </div>
-        
-                </div>
-        
+                margin-top: 30px !important;
+              "
+            >
+              <br />
+              <br />
+              <h2
+                style="
+                  font-weight: 700;
+                  color: #081e3d;
+                  font-size: 52px;
+                  padding: 25px;
+                "
+              >
+                Accelerate Maternal <br />
+                Care with AI
+              </h2>
+
+              <p
+                style="
+                  font-weight: 400;
+                  color: #081e3d;
+                  padding-left: 25px;
+                  padding-right: 25px;
+                  margin-bottom: 0px;
+                "
+              >
+                Streamline obstetric ultrasounds 5x faster, generating
+                comprehensive reports for immediate action
+              </p>
+              <br />
+
+              <a href="sign.html"
+                ><button
+                  class="btn"
+                  style="
+                    background-color: #081e3d;
+                    padding-left: 25px;
+                    padding-right: 25px;
+                    color: white;
+                    margin-left: 25px;
+                    margin-bottom: 40px;
+                  "
+                >
+                  Start now
+                </button>
+              </a>
+              <br /><br />
             </div>
-            <br><br>
-            <br><br>
-            <br><br>
-
-            <div class="row">
-                <div class="col-lg-4">
-
-                    <div style="width: 90%;margin-left: 5%; 
-                    background-color: white !important; 
-                    border-radius: 15px; 
-                    
-                    margin-top: 30px !important;
-                    "><br>
-                    <br>
-                     
-                    
-                     <p style="font-weight: 400; color: #081e3d; padding-left: 25px; padding-right: 25px; margin-bottom: 0px;">
-                        <span style="font-weight: 600;">Fast Performance.</span><br><br>
-                            Empower radiologists to perform, analyze, and document scans 5 times faster
-                     </p>
-                     <br>
-                    
-                     <br><br>
-                    </div>
-        
-                </div>
-
-                <div class="col-lg-4">
-
-                    <div style="width: 90%;margin-left: 5%; 
-                    background-color: white !important; 
-                    border-radius: 15px; 
-                    
-                    margin-top: 30px !important;
-                    "><br>
-                    <br>
-                     
-                    
-                     <p style="font-weight: 400; color: #081e3d; padding-left: 25px; padding-right: 25px; margin-bottom: 0px;">
-                        <span style="font-weight: 600;">Comprehensive Reports.</span><br>
-                        <br>
-                        Generate comprehensive reports for immediate action with instant editable and print options.
-                     </p>
-                     <br>
-                    
-                     <br><br>
-                    </div>
-        
-                </div>
-
-                <div class="col-lg-4">
-
-                    <div style="width: 90%;margin-left: 5%; 
-                    background-color: white !important; 
-                    border-radius: 15px; 
-                    
-                    margin-top: 30px !important;
-                    "><br>
-                    <br>
-                     
-                    
-                     <p style="font-weight: 400; color: #081e3d; padding-left: 25px; padding-right: 25px; margin-bottom: 0px;">
-                        <span style="font-weight: 600;">AI-Powered.</span><br><br>
-                        Utilize cutting-edge AI to enhance the accuracy and efficiency of maternal care..
-                     </p>
-                     <br>
-                    
-                     <br>
-                     <br>
-                    </div>
-        
-                </div>
-               
+          </div>
+          <div class="col-lg-6">
+            <div
+              style="
+                width: 90%;
+                margin-left: 5%;
+                background-color: white !important;
+                border-radius: 15px;
+                height: 100px;
+                margin-top: 30px !important;
+              "
+            >
+              <img src="baby.png" width="100%" />
             </div>
+          </div>
+        </div>
+        <br /><br />
+        <br /><br />
+        <br /><br />
 
-            <br><br>
+        <div class="row">
+          <div class="col-lg-4">
+            <div
+              style="
+                width: 90%;
+                margin-left: 5%;
+                background-color: white !important;
+                border-radius: 15px;
 
-            <div class="row">
-                <div class="col-lg-6">
+                margin-top: 30px !important;
+              "
+            >
+              <br />
+              <br />
 
-                    <div style="width: 90%;margin-left: 5%; 
-                    background-color: white !important; 
-                    border-radius: 15px; 
-                    
-                    margin-top: 30px !important;
-                    "><br>
-                    <br>
-                     
-                    
-                     <p style="font-weight: 400; color: #081e3d; padding-left: 25px; padding-right: 25px; margin-bottom: 0px;">
-                        <span style="font-weight: 600;">About Us.</span><br><br>
-                        We are dedicated to revolutionizing maternal care through AI technology. Our platform helps radiologists perform and document ultrasounds efficiently, ensuring better outcomes for mothers and babies.
-                     </p>
-                     <br>
-                    
-                     <br><br>
-                    </div>
-        
-                </div>
+              <p
+                style="
+                  font-weight: 400;
+                  color: #081e3d;
+                  padding-left: 25px;
+                  padding-right: 25px;
+                  margin-bottom: 0px;
+                "
+              >
+                <span style="font-weight: 600">Fast Performance.</span
+                ><br /><br />
+                Empower radiologists to perform, analyze, and document scans 5
+                times faster
+              </p>
+              <br />
 
-                <div class="col-lg-6">
-
-                    <div style="width: 90%;margin-left: 5%; 
-                    background-color: white !important; 
-                    border-radius: 15px; 
-                    
-                    margin-top: 30px !important;
-                    "><br>
-                    <br>
-                     
-                    
-                     <p style="font-weight: 400; color: #081e3d; padding-left: 25px; padding-right: 25px; margin-bottom: 0px;">
-                        <span style="font-weight: 600; padding-left: 3%;">Contact us</span><br>
-                        <br>
-                        
-                     </p>
-                     
-                     <form style="margin-left: 7%; margin-right: 7%;">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
-                        </div>
-                        <button style="background-color: #06203a; border: #06203a;" type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                     <br>
-                    
-                     <br><br>
-                    </div>
-        
-                </div>
-
-              
-               
+              <br /><br />
             </div>
-        
-           </div>
-        
+          </div>
+
+          <div class="col-lg-4">
+            <div
+              style="
+                width: 90%;
+                margin-left: 5%;
+                background-color: white !important;
+                border-radius: 15px;
+
+                margin-top: 30px !important;
+              "
+            >
+              <br />
+              <br />
+
+              <p
+                style="
+                  font-weight: 400;
+                  color: #081e3d;
+                  padding-left: 25px;
+                  padding-right: 25px;
+                  margin-bottom: 0px;
+                "
+              >
+                <span style="font-weight: 600">Comprehensive Reports.</span
+                ><br />
+                <br />
+                Generate comprehensive reports for immediate action with instant
+                editable and print options.
+              </p>
+              <br />
+
+              <br /><br />
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div
+              style="
+                width: 90%;
+                margin-left: 5%;
+                background-color: white !important;
+                border-radius: 15px;
+
+                margin-top: 30px !important;
+              "
+            >
+              <br />
+              <br />
+
+              <p
+                style="
+                  font-weight: 400;
+                  color: #081e3d;
+                  padding-left: 25px;
+                  padding-right: 25px;
+                  margin-bottom: 0px;
+                "
+              >
+                <span style="font-weight: 600">AI-Powered.</span><br /><br />
+                Utilize cutting-edge AI to enhance the accuracy and efficiency
+                of maternal care..
+              </p>
+              <br />
+
+              <br />
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <br /><br />
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div
+              style="
+                width: 90%;
+                margin-left: 5%;
+                background-color: white !important;
+                border-radius: 15px;
+
+                margin-top: 30px !important;
+              "
+            >
+              <br />
+              <br />
+
+              <p
+                style="
+                  font-weight: 400;
+                  color: #081e3d;
+                  padding-left: 25px;
+                  padding-right: 25px;
+                  margin-bottom: 0px;
+                "
+              >
+                <span style="font-weight: 600">About Us.</span><br /><br />
+                We are dedicated to revolutionizing maternal care through AI
+                technology. Our platform helps radiologists perform and document
+                ultrasounds efficiently, ensuring better outcomes for mothers
+                and babies.
+              </p>
+              <br />
+
+              <br /><br />
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div
+              style="
+                width: 90%;
+                margin-left: 5%;
+                background-color: white !important;
+                border-radius: 15px;
+
+                margin-top: 30px !important;
+              "
+            >
+              <br />
+              <br />
+
+              <p
+                style="
+                  font-weight: 400;
+                  color: #081e3d;
+                  padding-left: 25px;
+                  padding-right: 25px;
+                  margin-bottom: 0px;
+                "
+              >
+                <span style="font-weight: 600; padding-left: 3%"
+                  >Contact us</span
+                ><br />
+                <br />
+              </p>
+
+              <form style="margin-left: 7%; margin-right: 7%">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Enter your email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea
+                    class="form-control"
+                    id="message"
+                    rows="5"
+                    placeholder="Enter your message"
+                  ></textarea>
+                </div>
+                <button
+                  style="background-color: #06203a; border: #06203a"
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </form>
+              <br />
+
+              <br /><br />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Footer -->
-    <footer style="background-color: #06203a !important; " class="text-center py-4">
-        <div class="container">
-            <p style="color: black">&copy; 2024 Rapha AI. All Rights Reserved.</p>
-        </div>
+    <footer
+      style="background-color: #06203a !important"
+      class="text-center py-4"
+    >
+      <div class="container">
+        <p style="color: black">&copy; 2024 Rapha AI. All Rights Reserved.</p>
+      </div>
     </footer>
 
     <!-- JavaScript -->
@@ -292,7 +441,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // Custom JavaScript can go here
+      // Custom JavaScript can go here
     </script>
-</body>
+  </body>
 </html>

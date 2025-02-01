@@ -1,203 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rapha AI</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-  <style>
-    .shadow-inward {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapha AI</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <style>
+      .shadow-inward {
         box-shadow: inset 0 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        
-        .rect-button {
-            background-color: #081e3d;
-            border: none;
-            padding: 10px 20px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .logo {
-            width: 24px;
-            height: 24px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            right: 10px; /* Adjust positioning as needed */
-        }
-
-        .logo::before {
-            content: '+';
-            color: #081e3d;
-            font-size: 16px;
-            line-height: 1;
-        }
-        .center-button {
-    display: inline-block;
-    margin: 10px;
-}
-.button-container {
-    text-align: center;
-}
-  </style>
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
-      authDomain: "timirg-copilot.firebaseapp.com",
-      databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
-      projectId: "timirg-copilot",
-      storageBucket: "timirg-copilot.appspot.com",
-      messagingSenderId: "491904583147",
-      appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
-      measurementId: "G-GNZKB9SKDE"
-    };
-  
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-
-    // Check auth state
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        // User is signed in, retrieve user data
-        const userId = user.uid;
-        firebase.database().ref('/users/' + userId).once('value').then(snapshot => {
-          const userData = snapshot.val();
-          if (userData) {
-            const firstLetter = userData.title.charAt(0).toUpperCase();
-            document.getElementById('firstLetter').innerText = firstLetter;
-            document.getElementById('title').innerText = userData.title;
-            document.getElementById('email').innerText = userData.email;
-            document.getElementById('name').innerText = userData.title;
-          }
-        });
-      } else {
-        // No user is signed in, redirect to login page
-        window.location.href = 'login.html';
       }
-    });
-  </script>
-</head>
-<body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class=" col-6 col-lg-9 ">
-        <!-- Left side content if any -->
-         <p style="margin-top: 10px; margin-bottom: 10px;padding: 23px; color: #081e3d; font-weight: 700;">Rapha AI</p>
-      </div>
-      <div class=" col-6  col-lg-3">
-        <div class="row">
-          <div class="col-lg-3">
-            <div style="margin-top: 10px; margin-bottom: 10px;">
-              <p class="d-none d-md-block" style="padding: 23px; margin: 0; width: 60px; background-color: #081e3d; border-radius: 60px; height: 60px; color: white; text-align: center; font-size: 10px" id="firstLetter"></p>
+      .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .rect-button {
+        background-color: #081e3d;
+        border: none;
+        padding: 10px 20px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .logo {
+        width: 24px;
+        height: 24px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 10px; /* Adjust positioning as needed */
+      }
+
+      .logo::before {
+        content: "+";
+        color: #081e3d;
+        font-size: 16px;
+        line-height: 1;
+      }
+      .center-button {
+        display: inline-block;
+        margin: 10px;
+      }
+      .button-container {
+        text-align: center;
+      }
+    </style>
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyA3fMQiCZWFpPZJ1JrObgdygtvAC23Hfwo",
+        authDomain: "timirg-copilot.firebaseapp.com",
+        databaseURL: "https://timirg-copilot-default-rtdb.firebaseio.com",
+        projectId: "timirg-copilot",
+        storageBucket: "timirg-copilot.appspot.com",
+        messagingSenderId: "491904583147",
+        appId: "1:491904583147:web:7ad8a54b7341b1abbf05ae",
+        measurementId: "G-GNZKB9SKDE",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Check auth state
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // User is signed in, retrieve user data
+          const userId = user.uid;
+          firebase
+            .database()
+            .ref("/users/" + userId)
+            .once("value")
+            .then((snapshot) => {
+              const userData = snapshot.val();
+              if (userData) {
+                const firstLetter = userData.title.charAt(0).toUpperCase();
+                document.getElementById("firstLetter").innerText = firstLetter;
+                document.getElementById("title").innerText = userData.title;
+                document.getElementById("email").innerText = userData.email;
+                document.getElementById("name").innerText = userData.title;
+              }
+            });
+        } else {
+          // No user is signed in, redirect to login page
+          window.location.href = "login.html";
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6 col-lg-9">
+          <!-- Left side content if any -->
+          <p
+            style="
+              margin-top: 10px;
+              margin-bottom: 10px;
+              padding: 23px;
+              color: #081e3d;
+              font-weight: 700;
+            "
+          >
+            Rapha AI
+          </p>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="row">
+            <div class="col-lg-3">
+              <div style="margin-top: 10px; margin-bottom: 10px">
+                <p
+                  class="d-none d-md-block"
+                  style="
+                    padding: 23px;
+                    margin: 0;
+                    width: 60px;
+                    background-color: #081e3d;
+                    border-radius: 60px;
+                    height: 60px;
+                    color: white;
+                    text-align: center;
+                    font-size: 10px;
+                  "
+                  id="firstLetter"
+                ></p>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-7">
-            <p style="color: rgba(128, 128, 128, 0.815); padding-left: 5px; padding-top: 12px; margin: 0;" id="title"></p>
-            <p style="color: black; padding-left: 5px; padding-top: 0; margin: 0;" id="email"></p>
-            <a href="#" style="font-size: 12px; color: red;padding-left: 5px; margin-bottom: 16px !important;" id="logout-link">Log Out</a><br>
-            <img id="dr-details" style="margin-top: 10px; margin-left: 20px;" width="80px" src="we.gif">
+            <div class="col-lg-7">
+              <p
+                style="
+                  color: rgba(128, 128, 128, 0.815);
+                  padding-left: 5px;
+                  padding-top: 12px;
+                  margin: 0;
+                "
+                id="title"
+              ></p>
+              <p
+                style="
+                  color: black;
+                  padding-left: 5px;
+                  padding-top: 0;
+                  margin: 0;
+                "
+                id="email"
+              ></p>
+              <a
+                href="#"
+                style="
+                  font-size: 12px;
+                  color: red;
+                  padding-left: 5px;
+                  margin-bottom: 16px !important;
+                "
+                id="logout-link"
+                >Log Out</a
+              ><br />
+              <img
+                id="dr-details"
+                style="margin-top: 10px; margin-left: 20px"
+                width="80px"
+                src="we.gif"
+              />
+            </div>
           </div>
         </div>
       </div>
+      <hr style="margin: 0" />
     </div>
-    <hr style="margin: 0;">
-  </div>
-  <div class="container-fluid">
-    <div class="row">
-         
-         <div style="padding-left: 50px;"  class="col-lg-8 shadow-inward">
-            <!-- Content here -->
-             <p style="color: #081e3d; margin-top: 15px; margin-left: 10px; font-weight: 600; font-size: 30px;">Welcome ,<span id="name"><img id="dr-details" style="margin-top: 10px; margin-left: 20px;" width="60px" src="we.gif"></span></p>
-             <p style="color: grey;">You are currently on free tier plan</p>
-            
+    <div class="container-fluid">
+      <div class="row">
+        <div style="padding-left: 50px" class="col-lg-8 shadow-inward">
+          <!-- Content here -->
+          <p
+            style="
+              color: #081e3d;
+              margin-top: 15px;
+              margin-left: 10px;
+              font-weight: 600;
+              font-size: 30px;
+            "
+          >
+            Welcome ,<span id="name"
+              ><img
+                id="dr-details"
+                style="margin-top: 10px; margin-left: 20px"
+                width="60px"
+                src="we.gif"
+            /></span>
+          </p>
+          <p style="color: grey">You are currently on free tier plan</p>
 
-            <div id="stageone"  >
-                <button id="recordBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Start Session</button>
-             
-            </div>
-            <div style="display: none;" id="stagefour">
-              <p style="margin-left: 30px;">
-
-                <span style="font-size: 20px; color: #3894eb; font-weight:600 ;">Generating Result</span><br>
-                <img style="margin-top: 10px; margin-left: 20px;" width="100px" src="we.gif">
-              </p>
-            </div>
-            <div style="display: none;" id="stagefive">
-              <p style="margin-left: 30px;">
-
-                <span style="font-size: 20px; color: #3894eb; font-weight:600 ;">Generating Report</span><br>
-                <img style="margin-top: 10px; margin-left: 20px;" width="100px" src="we.gif">
-              </p>
-            </div>
-            
-            <div id="stagetwo" style="display: none;">
-                <div class="mt-3">
-                    <audio  id="audioPlayback" controls></audio>
-                    <p style="color: red;" id="recordingTime">Recording Time: 0s</p>
-                  </div>
-                  <br>
-                <button id="stopBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Stop Session</button>
-           
-            <br>
-            </div>
-
-            <div style="display: none;" id="stagesix"  >
-             <p> Here is the PDF of the report create: <button id="recordBtn" onclick="downloadRecentReport()" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;">Download Report</button>
-             </p>
+          <div id="stageone">
+            <button
+              id="recordBtn"
+              style="
+                color: white;
+                background-color: #081e3d;
+                padding: 9px;
+                padding-left: 13px;
+                padding-right: 13px;
+                border-radius: 10px;
+                border: #081e3d;
+              "
+            >
+              <span>+</span> Start Session
+            </button>
+          </div>
+          <div style="display: none" id="stagefour">
+            <p style="margin-left: 30px">
+              <span style="font-size: 20px; color: #3894eb; font-weight: 600"
+                >Generating Result</span
+              ><br />
+              <img
+                style="margin-top: 10px; margin-left: 20px"
+                width="100px"
+                src="we.gif"
+              />
+            </p>
+          </div>
+          <div style="display: none" id="stagefive">
+            <p style="margin-left: 30px">
+              <span style="font-size: 20px; color: #3894eb; font-weight: 600"
+                >Generating Report</span
+              ><br />
+              <img
+                style="margin-top: 10px; margin-left: 20px"
+                width="100px"
+                src="we.gif"
+              />
+            </p>
           </div>
 
-
-            <div id="stagethree" style="display: none;" class="row ">
-                <div class="col-lg-1">
-                    
-                </div>
-                <div class="col-lg-6">
-
-                    <br><br><br><br>
-            <h3 style="text-align: center;">Enter patient information</h3>
-            <br>
-            <div class="form-group">
-              <label for="emailInput">Full Name:</label>
-              <input type="text" class="form-control" id="nameInput" placeholder="Enter Full Name">
+          <div id="stagetwo" style="display: none">
+            <div class="mt-3">
+              <audio id="audioPlayback" controls></audio>
+              <p style="color: red" id="recordingTime">Recording Time: 0s</p>
             </div>
-           
-              <br>
+            <br />
+            <button
+              id="stopBtn"
+              style="
+                color: white;
+                background-color: #081e3d;
+                padding: 9px;
+                padding-left: 13px;
+                padding-right: 13px;
+                border-radius: 10px;
+                border: #081e3d;
+              "
+            >
+              <span>+</span> Stop Session
+            </button>
+
+            <br />
+          </div>
+
+          <div style="display: none" id="stagesix">
+            <p>
+              Here is the PDF of the report create:
+              <button
+                id="recordBtn"
+                onclick="downloadRecentReport()"
+                style="
+                  color: white;
+                  background-color: #081e3d;
+                  padding: 9px;
+                  padding-left: 13px;
+                  padding-right: 13px;
+                  border-radius: 10px;
+                  border: #081e3d;
+                "
+              >
+                Download Report
+              </button>
+            </p>
+          </div>
+
+          <div id="stagethree" style="display: none" class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6">
+              <br /><br /><br /><br />
+              <h3 style="text-align: center">Enter patient information</h3>
+              <br />
+              <div class="form-group">
+                <label for="emailInput">Full Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nameInput"
+                  placeholder="Enter Full Name"
+                />
+              </div>
+
+              <br />
               <div class="form-group">
                 <label for="emailInput">Hospital number:</label>
-                <input type="text" class="form-control" id="Hospitalnumber" placeholder="Enter Hospital number">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Hospitalnumber"
+                  placeholder="Enter Hospital number"
+                />
               </div>
-              <br>
-                    <button id="uploadBtn" style="color: white; background-color: #081e3d; padding: 9px; padding-left: 13px; padding-right: 13px; border-radius: 10px; border: #081e3d;"><span>+</span> Submit Analysis</button>
-            
-                </div>
+              <br />
+              <button
+                id="uploadBtn"
+                style="
+                  color: white;
+                  background-color: #081e3d;
+                  padding: 9px;
+                  padding-left: 13px;
+                  padding-right: 13px;
+                  border-radius: 10px;
+                  border: #081e3d;
+                "
+              >
+                <span>+</span> Submit Analysis
+              </button>
             </div>
-            <div id="result" class="mt-5"></div>
+          </div>
+          <div id="result" class="mt-5"></div>
         </div>
-        <div style="height: 1500px;" class="col-lg-4">
+        <div style="height: 1500px" class="col-lg-4">
           <div class="container mt-5">
             <h2 class="mb-4">Previous Session</h2>
-            <img id="old-sessions" style="margin-top: 10px; margin-left: 20px;" width="100px" src="we.gif">
+            <img
+              id="old-sessions"
+              style="margin-top: 10px; margin-left: 20px"
+              width="100px"
+              src="we.gif"
+            />
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -207,143 +357,136 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody id="reportsTable">
-               
-              </tbody>
+              <tbody id="reportsTable"></tbody>
             </table>
           </div>
         </div>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
 <script>
-    let mediaRecorder;
-    let audioChunks = [];
-    let startTime;
-    let timerInterval;
+  let mediaRecorder;
+  let audioChunks = [];
+  let startTime;
+  let timerInterval;
 
-    const recordBtn = document.getElementById('recordBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const uploadBtn = document.getElementById('uploadBtn');
-    const audioPlayback = document.getElementById('audioPlayback');
-    const recordingTime = document.getElementById('recordingTime');
-    const resultDiv = document.getElementById('result');
-    const stagethree = document.getElementById('stagethree');
-    const stagetwo= document.getElementById('stagetwo');
-    const stageone = document.getElementById('stageone');
-  
+  const recordBtn = document.getElementById("recordBtn");
+  const stopBtn = document.getElementById("stopBtn");
+  const uploadBtn = document.getElementById("uploadBtn");
+  const audioPlayback = document.getElementById("audioPlayback");
+  const recordingTime = document.getElementById("recordingTime");
+  const resultDiv = document.getElementById("result");
+  const stagethree = document.getElementById("stagethree");
+  const stagetwo = document.getElementById("stagetwo");
+  const stageone = document.getElementById("stageone");
 
+  function updateRecordingTime() {
+    const elapsedTime = Math.round((Date.now() - startTime) / 1000);
+    recordingTime.textContent = `Recording Time: ${elapsedTime}s`;
+  }
 
+  recordBtn.addEventListener("click", async () => {
+    document.getElementById("stageone").style.display = "none";
 
-    function updateRecordingTime() {
-      const elapsedTime = Math.round((Date.now() - startTime) / 1000);
-      recordingTime.textContent = `Recording Time: ${elapsedTime}s`;
-    }
+    document.getElementById("stagetwo").style.display = "block";
 
-    recordBtn.addEventListener('click', async () => {
-      document.getElementById("stageone").style.display = "none";
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start();
 
+    startTime = Date.now();
+    timerInterval = setInterval(updateRecordingTime, 1000);
 
-      document.getElementById("stagetwo").style.display = "block";
+    mediaRecorder.ondataavailable = (event) => {
+      audioChunks.push(event.data);
+    };
 
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      mediaRecorder.start();
+    mediaRecorder.onstop = () => {
+      clearInterval(timerInterval);
+      updateRecordingTime();
 
-      startTime = Date.now();
-      timerInterval = setInterval(updateRecordingTime, 1000);
+      const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      audioPlayback.src = audioUrl;
 
-      mediaRecorder.ondataavailable = event => {
-        audioChunks.push(event.data);
-      };
+      uploadBtn.disabled = false;
+    };
 
-      mediaRecorder.onstop = () => {
-        clearInterval(timerInterval);
-        updateRecordingTime();
-        
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        audioPlayback.src = audioUrl;
+    recordBtn.disabled = true;
+    stopBtn.disabled = false;
+  });
 
-        uploadBtn.disabled = false;
-      };
+  stopBtn.addEventListener("click", () => {
+    document.getElementById("stagetwo").style.display = "none";
+    document.getElementById("stagethree").style.display = "block";
+    mediaRecorder.stop();
+    stopBtn.disabled = true;
+    recordBtn.disabled = false;
+  });
+  let name = "";
+  let Hospitalnumber = "";
+  uploadBtn.addEventListener("click", async () => {
+    name = document.getElementById("nameInput").value;
 
-      recordBtn.disabled = true;
-      stopBtn.disabled = false;
-    });
+    Hospitalnumber = document.getElementById("Hospitalnumber").value;
 
-    stopBtn.addEventListener('click', () => {
-      document.getElementById("stagetwo").style.display = "none";
-      document.getElementById("stagethree").style.display = "block";
-      mediaRecorder.stop();
-      stopBtn.disabled = true;
-      recordBtn.disabled = false;
-    });
-    let name = ""
-    let Hospitalnumber =""
-    uploadBtn.addEventListener('click', async () => {
+    document.getElementById("stagethree").style.display = "none";
 
-       name = document.getElementById('nameInput').value;
+    document.getElementById("stagefour").style.display = "block";
 
-       Hospitalnumber = document.getElementById('Hospitalnumber').value;
-
-
-       
-      document.getElementById("stagethree").style.display = "none";
-
-      document.getElementById("stagefour").style.display = "block";
-      
-    
-      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-      audioChunks = [];
-      const storage = firebase.storage();
+    const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+    audioChunks = [];
+    const storage = firebase.storage();
 
     window.storage = storage;
 
-      const storageRef = storage.ref('audio/' + Date.now() + '.wav');
-      const uploadTask = storageRef.put(audioBlob);
+    const storageRef = storage.ref("audio/" + Date.now() + ".wav");
+    const uploadTask = storageRef.put(audioBlob);
 
-      uploadTask.then(async snapshot => {
-        console.log('File uploaded successfully:', snapshot);
+    uploadTask
+      .then(async (snapshot) => {
+        console.log("File uploaded successfully:", snapshot);
 
         // Get the download URL
         const downloadURL = await snapshot.ref.getDownloadURL();
 
         // Log the download URL to the console
-        console.log('Download URL:', downloadURL);
+        console.log("Download URL:", downloadURL);
 
         // Use the download URL in the GET API and display the result
         const result = await extractTextFromAudio(downloadURL);
-       
+
         displayResult(result);
-      }).catch(error => {
-        console.error('Error uploading file:', error);
+      })
+      .catch((error) => {
+        console.error("Error uploading file:", error);
       });
 
-      uploadBtn.disabled = true;
+    uploadBtn.disabled = true;
+  });
+
+  async function extractTextFromAudio(downloadURL) {
+    // Example function to extract text from audio using some API endpoint
+    // You would replace this with your actual extraction logic
+    const response = await fetch("/extract-audio-text", {
+      // + encodeURIComponent(downloadURL)
+      method: "POST",
+      body: JSON.stringify({ filePath: downloadURL }),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
     });
 
-    async function extractTextFromAudio(downloadURL) {
-      // Example function to extract text from audio using some API endpoint
-      // You would replace this with your actual extraction logic
-      const response = await fetch('/extract-audio-text', { // + encodeURIComponent(downloadURL)
-        method: 'POST',
-        body: JSON.stringify({ filePath: (downloadURL) }),
-        headers: {
-          "Content-Type": "application/json",
-          "accept": "application/json",
-        }
-      });
+    const extractedText = await response.text();
+    return extractedText;
+  }
 
-      const extractedText = await response.text();
-      return extractedText;
-    }
+  function displayResult(result) {
+    document.getElementById("stagefour").style.display = "none";
 
-    function displayResult(result) {
-          document.getElementById("stagefour").style.display = "none";
-          
-            resultDiv.innerHTML = `
+    resultDiv.innerHTML = `
                 <div class="row">
                     <div id="GenerateReportx" class="col-lg-6">
                         <h3 style="margin-left:30px;">Extracted Text</h3>
@@ -363,144 +506,160 @@
 
             `;
 
-            document.getElementById('GenerateReport').addEventListener('click', async () => {
-             
-              document.getElementById("GenerateReportx").style.display = "none";
-              document.getElementById("submitReportx").style.display = "block";
+    document
+      .getElementById("GenerateReport")
+      .addEventListener("click", async () => {
+        document.getElementById("GenerateReportx").style.display = "none";
+        document.getElementById("submitReportx").style.display = "block";
 
-                let responseText = document.getElementById('resultM').value;
-                   
-                responseText = "Date :" + (new Date()).toUTCString() + "Patient Name :" + name + "Hospital number :" + Hospitalnumber + " " +    responseText;
+        let responseText = document.getElementById("resultM").value;
 
-                console.log(responseText)
-                try {
-                    const response = await fetch('/generate-gemini-report', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ response: responseText })
-                    });
+        responseText =
+          "Date :" +
+          new Date().toUTCString() +
+          "Patient Name :" +
+          name +
+          "Hospital number :" +
+          Hospitalnumber +
+          " " +
+          responseText;
 
-                    if (response.ok) {
-                        const report = await response.text();
-                        document.getElementById('report').value = report;
-                    } else {
-                        console.error('Failed to generate report');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            });
-            document.getElementById('submitReport').addEventListener('click', async () => {
-              
-              document.getElementById("submitReportx").style.display = "none";
+        console.log(responseText);
+        try {
+          const response = await fetch("/generate-gemini-report", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ response: responseText }),
+          });
 
-              document.getElementById("stagesix").style.display = "block";
-
-              const report = document.getElementById('report').value;
-              const drEmail = window.localStorage.getItem('drEmail');
-                try {
-                    const response = await fetch('/store-report', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ report, drEmail, name })
-                    });
-
-                    if (response.ok) {
-                        alert("pdf successfully generated.")
-                    } else {
-                        console.error('Failed to generate report');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            });
+          if (response.ok) {
+            const report = await response.text();
+            document.getElementById("report").value = report;
+          } else {
+            console.error("Failed to generate report");
+          }
+        } catch (error) {
+          console.error("Error:", error);
         }
-        const logoutLink = document.getElementById('logout-link');
+      });
+    document
+      .getElementById("submitReport")
+      .addEventListener("click", async () => {
+        document.getElementById("submitReportx").style.display = "none";
 
-// Add event listener to the logout link
-logoutLink.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent the default link behavior
-    firebase.auth().signOut().then(() => {
-        console.log('User logged out successfully');
-        // Redirect to login page or show a message
-        window.location.href = 'index.html'; // Change this to your login page
-    }).catch((error) => {
-        console.error('Error logging out:', error);
-    });
-});
-       
-async function getRawReports (){
-  try {
-    const drEmail = window.localStorage.getItem('drEmail');
-      console.log(drEmail)
-      const res = await fetch(`/get-reports?drEmail=${drEmail}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const {data} = await res.json()
-      console.log(data)
-      return data
-  } catch (error) {
-    console.log(error)
-    return []
+        document.getElementById("stagesix").style.display = "block";
+
+        const report = document.getElementById("report").value;
+        const drEmail = window.localStorage.getItem("drEmail");
+        try {
+          const response = await fetch("/store-report", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ report, drEmail, name }),
+          });
+
+          if (response.ok) {
+            alert("pdf successfully generated.");
+          } else {
+            console.error("Failed to generate report");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
   }
-}
-async function getReports (){
-    try {
-      const drEmail = window.localStorage.getItem('drEmail')
-      console.log(drEmail)
-      const res = await fetch(`/get-reports?drEmail=${drEmail}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+  const logoutLink = document.getElementById("logout-link");
+
+  // Add event listener to the logout link
+  logoutLink.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent the default link behavior
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log("User logged out successfully");
+        // Redirect to login page or show a message
+        window.location.href = "index.html"; // Change this to your login page
       })
-      const {data} = await res.json()
-      let html =''
-      console.log(data)
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
+  });
+
+  async function getRawReports() {
+    try {
+      const drEmail = window.localStorage.getItem("drEmail");
+      console.log(drEmail);
+      const res = await fetch(`/get-reports?drEmail=${drEmail}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const { data } = await res.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+  async function getReports() {
+    try {
+      const drEmail = window.localStorage.getItem("drEmail");
+      console.log(drEmail);
+      const res = await fetch(`/get-reports?drEmail=${drEmail}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const { data } = await res.json();
+      let html = "";
+      console.log(data);
       data.forEach((element, i) => {
-        html +=
-          `      <tr>
-                  <td>${i+1}</td>
+        html += `      <tr>
+                  <td>${i + 1}</td>
                   <td>${element.name || ""}</td>
-                  <td>${((new Date(element.timestamp)).toUTCString()).replace("GMT", "")}</td>
+                  <td>${new Date(element.timestamp)
+                    .toUTCString()
+                    .replace("GMT", "")}</td>
                   <td>
-                    <button class="btn btn-primary" id=${element.id} onclick="downloadReports(this.id)" style="background-color: #081e3d !important;border: #081e3d;" >Download PDF</button>
+                    <button class="btn btn-primary" id=${
+                      element.id
+                    } onclick="downloadReports(this.id)" style="background-color: #081e3d !important;border: #081e3d;" >Download PDF</button>
                   </td>
                 </tr>
-          `
+          `;
       });
-      document.getElementById('old-sessions').style.display = 'none';
-      document.getElementById('dr-details').style.display = 'none';
-      document.getElementById('reportsTable').innerHTML = html
+      document.getElementById("old-sessions").style.display = "none";
+      document.getElementById("dr-details").style.display = "none";
+      document.getElementById("reportsTable").innerHTML = html;
     } catch (error) {
-      console.log(error)
-      return []
+      console.log(error);
+      return [];
     }
-}
-getReports()
-
-function downloadReports(id){
-  window.open(`/get-report?id=${id}`, '_blank');
-}
-
-async function downloadRecentReport(){
-  try {
-    const d = await getRawReports()
-    if(d.length > 0){
-      const report = d[0]
-      window.open(`/get-report?id=${report.id}`, '_blank');
-    }
-    return
-
-  } catch (error) {
-    alert('error occured')
   }
-}
-  </script>
+  getReports();
+
+  function downloadReports(id) {
+    window.open(`/get-report?id=${id}`, "_blank");
+  }
+
+  async function downloadRecentReport() {
+    try {
+      const d = await getRawReports();
+      if (d.length > 0) {
+        const report = d[0];
+        window.open(`/get-report?id=${report.id}`, "_blank");
+      }
+      return;
+    } catch (error) {
+      alert("error occured");
+    }
+  }
+</script>
