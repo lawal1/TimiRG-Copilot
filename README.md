@@ -36,7 +36,7 @@ To install Rapha AI, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/rapha-ai.git
+   git clone https://github.com/lawal1/TimiRG-Copilot.git
    cd rapha-ai
    ```
 
