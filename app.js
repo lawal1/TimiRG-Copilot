@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+//wife
 async function storeReport (report, details){
   try {
       const r =  report.replace(/##|\*\*/g, "")
